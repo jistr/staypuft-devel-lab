@@ -1,0 +1,14 @@
+<network>
+  <name>staypuft0</name>
+  <uuid>56929a3a-f74a-4227-9fbc-8a1b119fab0a</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr10' stp='on' delay='0'/>
+  <mac address='52:54:00:00:00:10'/>
+  <domain name='staypuft0.local'/>
+  <ip address='192.168.130.1' netmask='255.255.255.0'>
+  </ip>
+</network>

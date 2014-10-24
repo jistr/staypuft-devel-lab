@@ -1,0 +1,17 @@
+<network>
+  <name>staypuft1</name>
+  <uuid>d9c77028-8f64-4ce5-9fe4-ef99c74c2ce1</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr11' stp='on' delay='0'/>
+  <mac address='52:54:00:00:00:11'/>
+  <domain name='staypuft1.local'/>
+  <ip address='192.168.131.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.131.20' end='192.168.131.126'/>
+    </dhcp>
+  </ip>
+</network>

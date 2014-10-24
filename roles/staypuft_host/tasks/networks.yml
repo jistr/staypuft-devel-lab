@@ -1,0 +1,72 @@
+---
+
+# check for existence of networks
+
+- name: fact staypuft0_network_exists
+  shell: virsh net-info staypuft0
+  register: staypuft0_network_exists
+  changed_when: false
+  failed_when: false
+
+- name: fact staypuft1_network_exists
+  shell: virsh net-info staypuft1
+  register: staypuft1_network_exists
+  changed_when: false
+  failed_when: false
+
+- name: fact staypuft2_network_exists
+  shell: virsh net-info staypuft2
+  register: staypuft2_network_exists
+  changed_when: false
+  failed_when: false
+
+
+# write network XML descriptions
+
+- name: staypuft0 network description
+  template:
+    src=staypuft0.xml.j2
+    dest=/tmp/libvirt-net-staypuft0.xml
+  when: staypuft0_network_exists.rc != 0
+
+- name: staypuft1 network description
+  template:
+    src=staypuft1.xml.j2
+    dest=/tmp/libvirt-net-staypuft1.xml
+  when: staypuft1_network_exists.rc != 0
+
+- name: staypuft2 network description
+  template:
+    src=staypuft2.xml.j2
+    dest=/tmp/libvirt-net-staypuft2.xml
+  when: staypuft2_network_exists.rc != 0
+
+
+# define networks
+
+- name: define staypuft0 network
+  shell: virsh net-define --file=/tmp/libvirt-net-staypuft0.xml
+  when: staypuft0_network_exists.rc != 0
+
+- name: define staypuft1 network
+  shell: virsh net-define --file=/tmp/libvirt-net-staypuft1.xml
+  when: staypuft1_network_exists.rc != 0
+
+- name: define staypuft2 network
+  shell: virsh net-define --file=/tmp/libvirt-net-staypuft2.xml
+  when: staypuft2_network_exists.rc != 0
+
+
+# start and autostart networks
+
+- name: start staypuft0 network
+  shell: virsh net-start staypuft0 && virsh net-autostart staypuft0
+  when: staypuft0_network_exists.rc != 0
+
+- name: start staypuft1 network
+  shell: virsh net-start staypuft1 && virsh net-autostart staypuft1
+  when: staypuft1_network_exists.rc != 0
+
+- name: start staypuft2 network
+  shell: virsh net-start staypuft2 && virsh net-autostart staypuft2
+  when: staypuft2_network_exists.rc != 0
