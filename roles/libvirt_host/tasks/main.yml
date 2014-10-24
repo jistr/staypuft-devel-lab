@@ -1,0 +1,13 @@
+---
+- include: kvm.yml
+- include: libvirt.yml
+- include: moved_libvirt_storage.yml
+
+- name: install packages
+  yum: name="{{ item }}" state=present
+  with_items:
+    - "@Standard"
+    - git
+    - openvswitch
+    - screen
+    - tmux
