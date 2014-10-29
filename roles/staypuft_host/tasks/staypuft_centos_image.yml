@@ -1,0 +1,13 @@
+---
+- name: build staypuft centos image
+  shell: >-
+    rejviz-builder centos-6 -o {{ storage_pool_path }}/c6-sp1m.qcow2.built --format qcow2
+    --size 15G --hostname r6-staypuft --root-password password:changeme
+    --nic name=eth0,ipaddr=192.168.130.5,gateway=192.168.130.1,dns1=192.168.130.1
+    --mkdir /root/.ssh
+    --upload /root/.ssh/authorized_keys:/root/.ssh/authorized_keys
+    --run-command 'chown -R root: /root/.ssh; chmod 0700 /root/.ssh; chmod 0600 /root/.ssh/authorized_keys'
+    --run-command 'setfiles -W -v /etc/selinux/targeted/contexts/files/file_contexts /root/.ssh'
+    --install http://mirror.pnl.gov/epel/6/i386/epel-release-6-8.noarch.rpm
+  args:
+    creates: "{{ storage_pool_path }}/c6-sp1m.qcow2.built"

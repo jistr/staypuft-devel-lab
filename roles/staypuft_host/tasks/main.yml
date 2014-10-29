@@ -1,2 +1,5 @@
 ---
 - include: networks.yml
+- include: rejviz.yml
+- include: staypuft_centos_image.yml
+- include: staypuft_centos_vm.yml
