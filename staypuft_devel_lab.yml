@@ -1,4 +1,8 @@
-- hosts: lab
+- hosts: lab_host
   roles:
     - libvirt_host
     - staypuft_host
+
+- hosts: lab_sp1m
+  roles:
+    - staypuft_master

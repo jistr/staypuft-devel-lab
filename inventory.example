@@ -1,2 +1,5 @@
-[lab]
+[lab_host]
 some-machine.local   ansible_ssh_user=root
+
+[lab_sp1m]
+some-vm-tunnel.local   ansible_ssh_user=root

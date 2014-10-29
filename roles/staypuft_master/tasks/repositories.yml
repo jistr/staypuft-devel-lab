@@ -1,0 +1,28 @@
+---
+- name: install scl utils
+  yum: name=scl-utils state=present
+
+- name: fetch rhos-5-rhel-6 repo
+  shell: curl -o /etc/yum.repos.d/RHOS-5-RHEL-6.repo {{ poodle_dir }}/5.0.el6/latest-passed-ci/RHOS-5-RHEL-6.repo
+  args:
+    creates: /etc/yum.repos.d/RHOS-5-RHEL-6.repo
+
+- name: fetch foreman-rhel-6 repo
+  shell: curl -o /etc/yum.repos.d/Foreman-RHEL-6.repo {{ poodle_dir }}/foreman.el6/latest/Foreman-RHEL-6.repo
+  args:
+    creates: /etc/yum.repos.d/Foreman-RHEL-6.repo
+
+- name: install ruby193 scl repo
+  shell: yum -y install https://www.softwarecollections.org/en/scls/rhscl/ruby193/epel-6-x86_64/download/rhscl-ruby193-epel-6-x86_64.noarch.rpm
+  args:
+    creates: /etc/yum.repos.d/rhscl-ruby193-epel-6-x86_64.repo
+
+- name: install v8 scl repo
+  shell: yum -y install https://www.softwarecollections.org/en/scls/rhscl/v8314/epel-6-x86_64/download/rhscl-v8314-epel-6-x86_64.noarch.rpm
+  args:
+    creates: /etc/yum.repos.d/rhscl-v8314-epel-6-x86_64.repo
+
+- name: install foreman nightly repo
+  shell: yum -y install http://yum.theforeman.org/nightly/el6/x86_64/foreman-release.rpm
+  args:
+    creates: /etc/yum.repos.d/foreman.repo
