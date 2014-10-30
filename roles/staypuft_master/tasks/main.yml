@@ -1,2 +1,3 @@
 ---
 - include: repositories.yml
+- include: rpm_install.yml

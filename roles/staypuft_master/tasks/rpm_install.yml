@@ -1,0 +1,6 @@
+---
+- name: install staypuft-installer RPMs
+  yum: name={{ item }} state=present
+  with_items:
+    - foreman-installer-staypuft
+    - openstack-foreman-installer
