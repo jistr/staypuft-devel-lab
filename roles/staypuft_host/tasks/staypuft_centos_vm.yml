@@ -12,7 +12,7 @@
 - name: create sp1m vm
   shell: >-
     rejviz-install --noautoconsole --name c6-sp1m
-    --memory 2048 --vcpus 1
+    --memory 3072 --vcpus 1
     --import --disk /home/vm_storage_pool/c6-sp1m.qcow2
     --video qxl --channel spicevmc,target_type=virtio --graphics spice
     --auto-nic-mappings
