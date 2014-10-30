@@ -2,7 +2,7 @@
 - name: build staypuft centos image
   shell: >-
     rejviz-builder centos-6 --format qcow2
-    --hostname c6-sp1m -o {{ storage_pool_path }}/c6-sp1m.qcow2.built
+    --hostname c6-sp1m.staypuft0.local -o {{ storage_pool_path }}/c6-sp1m.qcow2.built
     --size 15G --root-password password:changeme
     --nic name=eth0,ipaddr=192.168.130.5,gateway=192.168.130.1,dns1=192.168.130.1
     --mkdir /root/.ssh

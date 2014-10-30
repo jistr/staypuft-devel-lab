@@ -1,0 +1,48 @@
+# Format:
+# <classname>: false - don't include this class
+# <classname>: true - include and use the defaults
+# <classname>:
+#   <param>: <value> - include and override the default(s)
+#
+# Every support plugin/compute class is listed, so that it
+# shows up in the interactive menu
+#
+# See params.pp in each class for what options are available
+---
+foreman:
+  authentication: true
+  custom_repo: true
+  configure_epel_repo: false
+  admin_password: changeme
+foreman_proxy:
+  custom_repo: true
+  tftp_servername: "192.168.130.5"
+  dns_forwarders:
+    - "192.168.130.1"
+  dhcp_nameservers: "192.168.130.5"
+  dhcp_gateway: "192.168.130.1"
+  dhcp_range: "192.168.130.100 192.168.130.254"
+puppet:
+  server: true
+"foreman::plugin::discovery":
+  install_images: true
+"foreman::plugin::tasks": true
+"foreman::plugin::bootdisk": false
+"foreman::plugin::staypuft":
+    own_gateway: "192.168.130.1"
+    gateway: "192.168.130.1"
+    ip: "192.168.130.5"
+    interface: eth0
+    base_url: "https://r6-staypuft.example.org"
+    ntp_host: clock.redhat.com
+    to: "192.168.130.254"
+    root_password: "$1$PDouFv6GNb8gEaJ51KUfvg==\n"
+    dns: "192.168.130.1"
+    configure_networking: true
+    network: "192.168.130.0"
+    ssh_public_key: "{{ ssh_public_key.stdout }}"
+    timezone: Europe/Prague
+    domain: example.org
+    from: "192.168.130.100"
+    netmask: "255.255.255.0"
+    configure_firewall: true

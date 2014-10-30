@@ -4,3 +4,50 @@
   with_items:
     - foreman-installer-staypuft
     - openstack-foreman-installer
+
+- name: fact ssh_public_key
+  shell: head -n 1 /root/.ssh/authorized_keys | tr -d '\n'
+  register: ssh_public_key
+  changed_when: false
+
+# answer file
+
+- name: backup original answer file
+  shell: mv /etc/foreman/staypuft-installer.answers.yaml /etc/foreman/staypuft-installer.answers.yaml.rpmorig
+  args:
+    creates: /etc/foreman/staypuft-installer.answers.yaml.rpmorig
+
+- name: fact staypuft_installer_answers
+  stat: path=/etc/foreman/staypuft-installer.answers.yaml
+  register: staypuft_installer_answers
+  changed_when: false
+
+- name: create answer file (no overwrite)
+  template:
+    src=staypuft-installer.answers.yaml.j2
+    dest=/etc/foreman/staypuft-installer.answers.yaml
+  when: not staypuft_installer_answers.stat.exists
+
+
+# config file
+
+- name: backup original config file
+  shell: mv /etc/foreman/staypuft-installer.yaml /etc/foreman/staypuft-installer.yaml.rpmorig
+  args:
+    creates: /etc/foreman/staypuft-installer.yaml.rpmorig
+
+- name: fact staypuft_installer_answers
+  stat: path=/etc/foreman/staypuft-installer.yaml
+  register: staypuft_installer_answers
+  changed_when: false
+
+- name: create config file (no overwrite)
+  template:
+    src=staypuft-installer.yaml.j2
+    dest=/etc/foreman/staypuft-installer.yaml
+  when: not staypuft_installer_answers.stat.exists
+
+- name: run staypuft-installer
+  shell: staypuft-installer --provisioning-wizard non-interactive
+  args:
+    creates: /var/log/foreman-installer/foreman-installer.log
